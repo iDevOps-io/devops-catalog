@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: -=app_name=-
+  labels:
+    app.kubernetes.io/name: -=app_name=-
+spec:
+  replicas: -=replicas=-
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: -=app_name=-
+  template:
+    metadata:
+      labels:
+        app: -=app_name=-
+    spec:
+      containers:
+      - name: -=app_name=-
+        image: -=docker_image_name=-
+        ports:
+        - containerPort: -=target_port_one=-
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: -=app_name=-
+spec:
+  selector:
+    app.kubernetes.io/name: -=app_name=-
+  ports:
+    - protocol: TCP
+      port: -=service_port_one=-
+      targetPort: -=target_port_one=-
+  type: LoadBalancer
